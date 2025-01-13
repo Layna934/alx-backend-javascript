@@ -1,9 +1,8 @@
-/**
- * Function to sum student ids
- * @param list of students
- * @returns sum result
- */
+const getStudentIdsSum = (students) => {
+  const id = students.reduce(
+    (acc, value) => acc + value.id, 0,
+  );
+  return id;
+};
 
-export default function getStudentIdsSum(students) {
-	return students.reduce((total, student) => total + student.id, 0);
-}
+export default getStudentIdsSum;

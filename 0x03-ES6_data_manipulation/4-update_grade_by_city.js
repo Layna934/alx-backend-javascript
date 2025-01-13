@@ -1,32 +1,22 @@
-/**
- * Updates the grades of a list of students in a given city.
- * @param {{
- *   id: Number,
- *   firstName: String,
- *   location: String
- * }[]} students - The list of students.
- * @param {*} city - The city of students.
- * @param {{
- *   studentId: Number,
- *   grade: Number,
- * }[]} newGrades - The new grades to be given to a student.
- * @author Precious <github.com/layna934>
- * @returns {{id: Number, firstName: String, location: String}[]}
- */
 export default function updateStudentGradeByCity(students, city, newGrades) {
-  const defaultGrade = { grade: 'N/A' };
-
-  if (students instanceof Array) {
-    return students
-      .filter((student) => student.location === city)
-      .map((student) => ({
-        id: student.id,
-        firstName: student.firstName,
-        location: student.location,
-        grade: (newGrades
-          .filter((grade) => grade.studentId === student.id)
-          .pop() || defaultGrade).grade,
-      }));
+  if (!Array.isArray(students) || !Array.isArray(newGrades)) {
+    return [];
   }
-  return [];
+  // Filter students by location
+  // Change/add grade for students in newGrades
+  // If a filtered student is not in new Grades => grade = N/A
+
+  const cityStudents = students.filter((student) => student.location === city).map((student) => {
+    const item2 = newGrades.find((student2) => student.id === student2.studentId);
+    // });
+    // console.log('FOUND STUDENT1: ', student);
+    // console.log('FOUND ITEM2: ', item2);
+    // console.log(item2 ? {...student, ...item2} : student.grade = 'N/A', student);
+    // if (!item2) {
+    //   student.grade = 'N/A'; // eslint-disable-line no-param-reassign
+    // }
+    return { ...student, grade: item2 ? item2.grade : 'N/A' };
+    // return item2 ? {...student, ...item2} : student,  student.grade = 'M/A';
+  });
+  return cityStudents;
 }
